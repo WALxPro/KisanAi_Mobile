@@ -99,6 +99,8 @@ const Home = () => {
         ) : (
           <Text className="text-center mt-4">Loading weather...</Text>
         )}
+
+        
         {historyData.map((item) => (
           <ScanCard key={item.id} item={item} isHeader={true} />
         ))}
