@@ -19,6 +19,7 @@ import Complain from "../screens/Complain/Complain";
 import SingleBlog from "../screens/SingleBlog/SingleBlog";
 import ScanResult from "../screens/ScanResult/ScanResult";
 import CropDetails from "../screens/CropDetail/Cropdetails";
+import ScanHistory from "../screens/ScanHistory/ScanHistory";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -71,6 +72,7 @@ export default function AppNavigator() {
           <Stack.Screen name="MainTabs" component={MainTabs} />
           <Stack.Screen name="Settings" component={Settings} /> 
           <Stack.Screen name="ScanResult" component={ScanResult} />
+          <Stack.Screen name="ScanHistory" component={ScanHistory} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

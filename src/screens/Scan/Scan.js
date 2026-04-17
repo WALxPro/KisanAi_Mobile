@@ -7,10 +7,13 @@ import { Topbar } from "../../components/Layout/TopBar";
 import MainLayout from "../../components/Layout/MainLayout";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 const API_URL = "http://192.168.100.16:8000/disease/predict";
 
 const Scan = () => {
+    const farmer = useSelector((state) => state.auth.user);
+
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -37,7 +40,7 @@ const Scan = () => {
         type: "image/jpeg",
       });
       formData.append("image_name", `scan_${Date.now()}.jpg`);
-      formData.append("user_email", "test@gmail.com");
+      formData.append("user_email", farmer.email);
 
       const res = await axios.post(API_URL, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -121,7 +124,7 @@ const Scan = () => {
           <View
             style={{
               width: "100%",
-              height: 300,
+              height: "70%",
               borderWidth: 1,
               borderColor: "#e2e8f0",
               borderRadius: 16,
@@ -203,7 +206,7 @@ const Scan = () => {
           )}
 
           {/* ─── ACTION BUTTONS ─── */}
-          <View style={{ gap: 12, marginTop: 8 }}>
+          <View style={{ gap: 3, marginTop: 8 }}>
             <Button onPress={pickFromCamera} disabled={loading}>
               {loading ? "Processing..." : "📷  Take Photo"}
             </Button>

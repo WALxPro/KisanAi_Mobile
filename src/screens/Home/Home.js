@@ -6,6 +6,7 @@ import BlogCard from "../../components/Ui/BlogCard";
 import TutorialCard from "../../components/Ui/TutorialCard";
 import { useSelector } from "react-redux";
 import { Header } from "../../components/Layout/Header";
+import ScanCard from "../../components/Ui/ScanCard";
 
 const WEATHER_API_KEY = "50e1795745e14d5bbf6194642262603";
 
@@ -31,7 +32,16 @@ const TUTORIAL = {
   thumbnail:
     "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&q=80",
 };
-
+const historyData = [
+    {
+        id: "1",
+        predicted_label: "Potato Early Blight",
+        confidence: 0.9993,
+        date: "2026-04-15",
+        time: "3:48 PM",
+    },
+    
+];
 const mandiRates = [
   { name: "Wheat", rate: "2500 PKR/40kg", emoji: "🌾" },
   { name: "Onion", rate: "120 PKR/kg", emoji: "🧅" },
@@ -83,19 +93,16 @@ const Home = () => {
     <Header />
     <MainLayout showBottomNav={true}>
       <View className="px-4">
-        <View>
-          <Text className="text-2xl text-foreground font-bold">
-            Welcome back
-          </Text>
-          <Text className="text-3xl font-interBold text-primary">
-            {farmer?.fullname}
-          </Text>
-        </View>
+        
         {weather?.current ? (
           <WeatherCard weather={weather} />
         ) : (
           <Text className="text-center mt-4">Loading weather...</Text>
         )}
+        {historyData.map((item) => (
+          <ScanCard key={item.id} item={item} isHeader={true} />
+        ))}
+        
         {/* <MandiCard /> */}
         <SectionHeader title="Latest Blog" />
         <BlogCard
