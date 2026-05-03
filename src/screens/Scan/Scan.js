@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Image, Alert, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Alert,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import Button from "../../components/Ui/Button";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -9,10 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-const API_URL = "http://192.168.100.16:8000/disease/predict";
+const API_URL = "http://192.168.10.12:8000/disease/predict";
 
 const Scan = () => {
-    const farmer = useSelector((state) => state.auth.user);
+  const farmer = useSelector((state) => state.auth.user);
 
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -86,7 +93,8 @@ const Scan = () => {
   // ─── gallery se image pick karta hai ───
   const pickFromGallery = async () => {
     try {
-      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const permission =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permission.granted) {
         Alert.alert("Permission Denied", "Gallery access is required.");
         return;
@@ -119,7 +127,6 @@ const Scan = () => {
       <Topbar title="Scan" />
       <MainLayout showBottomNav={true}>
         <View style={{ flex: 1, padding: 16 }}>
-
           {/* ─── IMAGE PREVIEW BOX ─── */}
           <View
             style={{
@@ -212,10 +219,9 @@ const Scan = () => {
             </Button>
 
             <Button onPress={pickFromGallery} disabled={loading}>
-              🖼️  Upload from Gallery
+              🖼️ Upload from Gallery
             </Button>
           </View>
-
         </View>
       </MainLayout>
     </>

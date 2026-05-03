@@ -5,12 +5,13 @@ import axios from "axios";
 // if (!baseUrl) throw new Error("VITE_API_URL not defined!");
 
 // const baseUrl = "https://noncommendatory-josef-semiandrogenous.ngrok-free.dev";
-const baseUrl = "http://192.168.100.16:8000";
+const baseUrl = "http://192.168.10.12:8000";
 export const API_BASE_URL = baseUrl;
 export const WS_BASE_URL = baseUrl.replace(/^http/i, "ws");
 
 // Common error handler
-const handleError = (error) => error.response?.data || { message: error.message };
+const handleError = (error) =>
+  error.response?.data || { message: error.message };
 
 // GET request
 export const get = async (endpoint, params) => {
@@ -29,17 +30,13 @@ export const post = async (endpoint, body, config = {}) => {
 
     const isFormData = body instanceof FormData;
 
-    const res = await axios.post(
-      `${baseUrl}/${endpoint}`,
-      body,
-      {
-        ...config,
-        headers: {
-          ...(isFormData ? {} : { "Content-Type": "application/json" }),
-          ...(config.headers || {}),
-        },
-      }
-    );
+    const res = await axios.post(`${baseUrl}/${endpoint}`, body, {
+      ...config,
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...(config.headers || {}),
+      },
+    });
 
     console.log("Response Status:", res.status);
     console.log("Response Data:", res.data);

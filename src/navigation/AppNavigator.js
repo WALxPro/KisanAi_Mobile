@@ -18,6 +18,7 @@ import Scan from "../screens/Scan/Scan";
 import Complain from "../screens/Complain/Complain";
 import SingleBlog from "../screens/SingleBlog/SingleBlog";
 import ScanResult from "../screens/ScanResult/ScanResult";
+import DiseaseChat from "../screens/ScanResult/DiseaseChatNew";
 import CropDetails from "../screens/CropDetail/Cropdetails";
 import ScanHistory from "../screens/ScanHistory/ScanHistory";
 
@@ -70,8 +71,9 @@ export default function AppNavigator() {
           <Stack.Screen name="ProfileImage" component={ProfileImage} />
           <Stack.Screen name="CropDetails" component={CropDetails} />
           <Stack.Screen name="MainTabs" component={MainTabs} />
-          <Stack.Screen name="Settings" component={Settings} /> 
+          <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="ScanResult" component={ScanResult} />
+          <Stack.Screen name="DiseaseChat" component={DiseaseChat} />
           <Stack.Screen name="ScanHistory" component={ScanHistory} />
         </Stack.Navigator>
       </NavigationContainer>
