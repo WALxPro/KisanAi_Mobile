@@ -1,67 +1,115 @@
 import axios from "axios";
-// import { API_URL } from "@env";
+import { auth } from "../config/firebase";
 
-// const baseUrl = API_URL;
-// if (!baseUrl) throw new Error("VITE_API_URL not defined!");
+const baseUrl = "http://192.168.100.5:8000";
 
-// const baseUrl = "https://noncommendatory-josef-semiandrogenous.ngrok-free.dev";
-const baseUrl = "http://192.168.10.12:8000";
 export const API_BASE_URL = baseUrl;
 export const WS_BASE_URL = baseUrl.replace(/^http/i, "ws");
 
-// Common error handler
-const handleError = (error) =>
-  error.response?.data || { message: error.message };
+// ======================
+// SAFE TOKEN FETCH
+// ======================
+const getToken = async () => {
+  const user = auth.currentUser;
+  if (!user) return null;
 
-// GET request
-export const get = async (endpoint, params) => {
   try {
-    const res = await axios.get(`${baseUrl}/${endpoint}`, { params });
-    return res.data;
-  } catch (error) {
-    throw handleError(error);
+    return await user.getIdToken();
+  } catch {
+    return null;
   }
 };
 
-export const post = async (endpoint, body, config = {}) => {
+// ======================
+// HEADERS BUILDER
+// ======================
+const getHeaders = async (isFormData = false, extraHeaders = {}) => {
+  const token = await getToken();
+
+  return {
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...extraHeaders,
+  };
+};
+
+// ======================
+// ERROR HANDLER
+// ======================
+const handleError = (error) => {
+  return error.response?.data || { message: error.message };
+};
+
+// ======================
+// SAFE URL BUILDER
+// ======================
+const buildUrl = (endpoint) => {
+  return `${baseUrl}/${endpoint}`.replace(/([^:]\/)\/+/g, "$1");
+};
+
+// ======================
+// GET
+// ======================
+export const get = async (endpoint, params = {}, config = {}) => {
   try {
-    console.log("POST Request:", baseUrl + "/" + endpoint);
-    console.log("Payload:", body);
-
-    const isFormData = body instanceof FormData;
-
-    const res = await axios.post(`${baseUrl}/${endpoint}`, body, {
+    const res = await axios.get(buildUrl(endpoint), {
+      params,
       ...config,
-      headers: {
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
-        ...(config.headers || {}),
-      },
+      headers: await getHeaders(false, config.headers),
     });
 
-    console.log("Response Status:", res.status);
-    console.log("Response Data:", res.data);
-
-    return res.data;
-  } catch (error) {
-    console.error("API Error:", error.response?.data || error.message);
-    throw error;
-  }
-};
-
-// PUT request
-export const put = async (endpoint, body, config = {}) => {
-  try {
-    const res = await axios.put(`${baseUrl}/${endpoint}`, body, config);
     return res.data;
   } catch (error) {
     throw handleError(error);
   }
 };
 
-// DELETE request
+// ======================
+// POST
+// ======================
+export const post = async (endpoint, body, config = {}) => {
+  try {
+    const isFormData = body instanceof FormData;
+
+    const res = await axios.post(buildUrl(endpoint), body, {
+      ...config,
+      headers: await getHeaders(isFormData, config.headers),
+    });
+
+    return res.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+// ======================
+// PUT
+// ======================
+export const put = async (endpoint, body, config = {}) => {
+  try {
+    const isFormData = body instanceof FormData;
+
+    const res = await axios.put(buildUrl(endpoint), body, {
+      ...config,
+      headers: await getHeaders(isFormData, config.headers),
+    });
+
+    return res.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+// ======================
+// DELETE
+// ======================
 export const del = async (endpoint, config = {}) => {
   try {
-    const res = await axios.delete(`${baseUrl}/${endpoint}`, config);
+    const res = await axios.delete(buildUrl(endpoint), {
+      ...config,
+      headers: await getHeaders(false, config.headers),
+    });
+
     return res.data;
   } catch (error) {
     throw handleError(error);

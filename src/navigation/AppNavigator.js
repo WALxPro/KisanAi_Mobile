@@ -21,11 +21,13 @@ import ScanResult from "../screens/ScanResult/ScanResult";
 import DiseaseChat from "../screens/ScanResult/DiseaseChatNew";
 import CropDetails from "../screens/CropDetail/Cropdetails";
 import ScanHistory from "../screens/ScanHistory/ScanHistory";
+import SingleTutorial from "../screens/SingleTutorial/SingleTutorial";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const BlogStackNav = createNativeStackNavigator();
+const TutorialStackNav = createNativeStackNavigator();
 
 function BlogsStack() {
   return (
@@ -33,6 +35,14 @@ function BlogsStack() {
       <BlogStackNav.Screen name="BlogsList" component={Blogs} />
       <BlogStackNav.Screen name="SingleBlog" component={SingleBlog} />
     </BlogStackNav.Navigator>
+  );
+}
+function TutorialStack() {
+  return (
+    <TutorialStackNav.Navigator screenOptions={{ headerShown: false }}>
+      <TutorialStackNav.Screen name="TutorialList" component={Tutorial} />
+      <TutorialStackNav.Screen name="SingleTutorial" component={SingleTutorial} />
+    </TutorialStackNav.Navigator>
   );
 }
 
@@ -47,7 +57,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Blogs" component={BlogsStack} />
-      <Tab.Screen name="Tutorial" component={Tutorial} />
+      <Tab.Screen name="Tutorial" component={TutorialStack} />
       <Tab.Screen name="Complain" component={Complain} />
       <Tab.Screen name="Scan" component={Scan} />
     </Tab.Navigator>

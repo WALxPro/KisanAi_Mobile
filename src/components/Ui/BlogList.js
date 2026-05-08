@@ -6,8 +6,8 @@ import BlogCard from "./BlogCard";
 import CardSkeleton from "./CardSkeleton";
 import EmptyState from "./EmptyState";
 import Error from "./Error";
-
-
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 const BlogList = ({ search = ""}) => {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ const BlogList = ({ search = ""}) => {
     setError(null);
     setLoading(true);
     try {
-      const response = await get("blogs/all");
+      const response = await get("blogs/public");
       console.log("API RESPONSE:", response);
       setBlogs(response);
     } catch (err) {
@@ -30,15 +30,11 @@ const BlogList = ({ search = ""}) => {
     }
   };
 
-  useEffect(() => {
-  fetchBlogs(); // pehli baar load
-
-  // const interval = setInterval(() => {
-  //   fetchBlogs(); // har 30 second baad
-  // }, 30000);
-
-  // return () => clearInterval(interval); // screen chhodni toh band
-}, []);
+useFocusEffect(
+  useCallback(() => {
+    fetchBlogs();
+  }, [])
+);
 
     const filteredBlogs = bloglist.filter((blog) =>
     blog.title?.toLowerCase().includes(search.toLowerCase())
@@ -77,7 +73,7 @@ if (error) {
   }
 
   return (
-    <ScrollView className="p-2 my-4">
+    <ScrollView className="p-2 ">
       {filteredBlogs.map((blog) => (
         <BlogCard
           key={blog._id}

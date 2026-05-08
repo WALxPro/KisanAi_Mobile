@@ -34,24 +34,6 @@ const ScanCard = ({ item, isHeader = false }) => {
   return (
     <View>
 
-      {/* 🔹 HEADER ONLY FOR FIRST CARD */}
-      {isHeader && (
-        <View className="flex-row items-center justify-between mb-3">
-          <Text className="text-lg font-bold">
-            Last Scan Result
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ScanHistory")}
-            className="flex-row items-center"
-          >
-            <Text className="text-sm font-semibold text-green-700 mr-1">
-              View All
-            </Text>
-            <ChevronRightIcon size={14} color="#15803d" />
-          </TouchableOpacity>
-        </View>
-      )}
 
       {/* 🔹 CARD */}
       <TouchableOpacity

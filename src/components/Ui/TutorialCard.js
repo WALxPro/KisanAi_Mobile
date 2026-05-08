@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 const TutorialCard = ({ item, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
-    className="bg-card rounded-2xl overflow-hidden shadow-sm"
+    className="bg-card rounded-2xl overflow-hidden shadow-sm mb-4"
     style={{ elevation: 2 }}
   >
     <Image

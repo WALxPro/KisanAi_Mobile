@@ -14,11 +14,11 @@ const categories = ["All", "Getting Started", "Features", "Account", "Support"];
   
   return (
     <>
-      <Topbar title="Tutorial" showSearch={true} search={search}/>
+      <Topbar title="Tutorial" showSearch={true} search={search} setSearch={setSearch}/>
     
     <MainLayout showBottomNav={true}>
       <View className="flex-1 ">
-        <TutorialList/>
+        <TutorialList search={search}/>
       </View>
     </MainLayout>
     </>

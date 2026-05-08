@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-const API_URL = "http://192.168.10.12:8000/disease/predict";
+const API_URL = "http://192.168.100.20:8000/disease/predict";
 
 const Scan = () => {
   const farmer = useSelector((state) => state.auth.user);
